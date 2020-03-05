@@ -1,0 +1,458 @@
+<html lang="tr">
+<head>
+    <meta content="application/json; charset=UTF-8" http-equiv="content-type">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>Sign Up</title>
+    <style>
+        .signUpForm {
+            position: center;
+            margin-top: 5%;
+            width: 60%;
+            border: inset;
+            background-color: whitesmoke;
+
+        }
+
+        .formInput {
+            width: 250px;
+            height: 30px;
+
+        }
+
+        .navContainer {
+            height: 80px;
+            width: 100%;
+            background-color: azure;
+        }
+
+        .signForm ul li {
+            list-style-type: none;
+        }
+
+        #signUpButton {
+            width: 40%;
+            height: 50px;
+            font-size: medium;
+            margin-left: 27%;
+        }
+
+        #checkboxSign {
+            margin-left: 18%;
+
+        }
+
+        .login {
+            width: 75%;
+            height: 20px;
+            margin-left: 14%;
+            margin-top: 4%;
+        }
+
+        .logInContainer {
+            width: 70%;
+
+            height: 300px;
+            margin-top: 10%;
+            border: inset;
+            position: center;
+            background-color: azure;
+            font-size: medium;
+        }
+
+        #logInButton {
+            margin-top: 4%;
+            margin-left: 23%;
+            width: 55%;
+            height: 55%;
+            font-size: large;
+            color: red;
+        }
+
+        .changePasswordForm {
+            border: inset;
+            font-size: medium;
+            width: 50%;
+            height: 50%;
+            position: center;
+            background-color: aliceblue;
+            margin-top: 7%;
+
+        }
+
+        .changeForm ul li {
+            list-style-type: none;
+            margin-left: 11%;
+            margin-top: 3%;
+        }
+
+        #changePasswordButton {
+            margin-left: 22%;
+            width: 35%;
+            height: 12%;
+            font-size: medium;
+        }
+
+        .formInputChangePassword {
+            width: 50%;
+            height: 10%;
+        }
+    </style>
+</head>
+<body>
+
+<!--NAVBAR YAPIMI-->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid navContainer">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"><h4 id="titleHome">
+                <img height="45"
+                     src="https://pngimage.net/wp-content/uploads/2018/06/tt-logo-png-1.png" width="45">
+                TimeTrack</h4>
+            </a>
+        </div>
+    </div>
+</nav>
+
+
+<!--TABLARIN YAPIMI-->
+<div class="container">
+
+    <ul class="nav nav-tabs">
+        <li><a data-toggle="tab" href="#signUp">Kayıt Ol</a></li>
+        <li class="active"><a data-toggle="tab" href="#logIn">Giriş Yap</a></li>
+        <li><a data-toggle="tab" href="#changePassword">Şifre Değiştir</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade" id="signUp">
+            <div class="container signUpForm">
+                <form class="signForm">
+                    <ul>
+                        <li><h4>Adı Soyadı<sup>*</sup>: <input class="formInput" id="name" placeholder="Adı Soyadı"
+                                                               type="text"></h4></li>
+                        <li><h4>Kullanıcı Adı<sup>*</sup>: <input class="formInput" id="userName" placeholder="Kullanıcı Adı"
+                                                                  type="text"></h4></li>
+                        <li><h4>Şifre<sup>*</sup>: <input class="formInput" id="userPassword" placeholder="Şifre"
+                                                          type="password"></h4></li>
+                        <li><h4>Şifre Onayı<sup>*</sup>: <input class="formInput" id="userPasswordConfirm"
+                                                                placeholder="Şifre Onayı" type="password"></h4></li>
+                        <li><h4>Telefon Numarası<sup>*</sup>: <input class="formInput" id="phoneNumber" placeholder="Telefon Numarası"
+                                                                     type="tel"></h4></li>
+                        <li><h4>E-mail<sup>*</sup>: <input class="formInput" id="inputEmail" placeholder="E-mail"
+                                                           type="inputEmail"></h4></li>
+                        <li><h4>Firma İsmi<sup>*</sup>: <input class="formInput" id="companyName" placeholder="Firma İsmi"
+                                                               type="text"></h4><br></li>
+                        <li><h4><input id="checkboxSign" type="checkbox">Tüm şartları okudum ve kabul ediyorum.</h4>
+                        </li>
+                        <li>
+                            <h4>
+                                <button id="signUpButton" onclick="validateForm();" type="button">Kayıt Ol</button>
+                            </h4>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+        <div class="tab-pane fade in active" id="logIn">
+            <div class="container logInContainer">
+                <form>
+                    <div class="input-group login">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input class="form-control" id="userNameLogin" name="userNameLogin" placeholder="Kullanıcı Adı"
+                               type="text"><br>
+                    </div>
+                    <div class="input-group login">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input class="form-control" id="password" name="password" placeholder="Şifre" type="password">
+                    </div>
+                    <div class="input-group login">
+                        <button id="logInButton" onclick="loginProcess();" type="button">Giriş Yap</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="changePassword">
+            <div class="container changePasswordForm">
+                <form class="changeForm">
+                    <ul>
+                        <li><h4>Kullanıcı Adı: <input class="formInputChangePassword" id="userNameForChangePassword"
+                                                      placeholder="Kullanıcı Adı" type="text"></h4></li>
+                        <li><h4>Mevcut Şifre: <input class="formInputChangePassword" id="oldPassword" placeholder="Mevcut Şifre"
+                                                     type="password"></h4></li>
+                        <br>
+                        <li><h4>Yeni Şifre: <input class="formInputChangePassword" id="newPassword" placeholder="Yeni Şifre"
+                                                   type="password"></h4></li>
+                        <li><h4>Yeni Şifre Onayı: <input class="formInputChangePassword" id="newPasswordConfirm"
+                                                         placeholder="Yeni Şifre Onayı" type="password"></h4></li>
+                        <br>
+                        <li>
+                            <h4>
+                                <button id="changePasswordButton" onclick="validateFormChangePassword();" type="button">
+                                    Tamamla
+                                </button>
+                            </h4>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="signUpSuccess" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" type="button">&times</button>
+                <h3 class="modal-title">Başarılı</h3>
+            </div>
+            <div class="modal-body">
+                <h4 id="nameInModal"></h4>
+                <h4><p>Kullanıcı kaydınız başarıyla oluşturulmuştur.</p></h4>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal" onclick="goHome();" type="button">Tamam</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="changePasswordSuccess" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" type="button">&times</button>
+                <h3 class="modal-title">Başarılı</h3>
+            </div>
+            <div class="modal-body">
+                <h4 id="nameInChangePasswordModal"></h4>
+                <h4><p>Kullanıcı şifreniz başarıyla değiştirilmiştir.</p></h4>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal" onclick="goHome();" type="button">Tamam</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    function goHome() {
+        location.href = "http://localhost:8080"
+    }
+
+    /* KULLANICI ŞİFRESİ DEĞİŞTİRME FONKSİYONLARI */
+
+    function validNewPassword() {
+        var newPassword = document.getElementById("newPassword").value;
+        var regex = /^[a-zA-Z0-9ğĞüÜşŞıİöÖÇç.,:;_]+$/;
+        return ((newPassword.match(regex)) && (7 < newPassword.length < 30))
+    }
+
+    function validNewPasswordConfirm() {
+        var newPassword = document.getElementById("newPassword").value;
+        var newPasswordConfirm = document.getElementById("newPasswordConfirm").value;
+        if (newPassword === newPasswordConfirm) {
+            return true;
+        }
+    }
+
+    function getInfoChangePassword() {
+        var userName = document.getElementById("userNameForChangePassword").value;
+        var oldPassword = document.getElementById("oldPassword").value;
+        var newPassword = document.getElementById("newPassword").value;
+        return {
+            "userName": userName,
+            "password": oldPassword,
+            "newPassword": newPassword,
+            "errorCode": 0,
+            "errorMessage": ""
+        };
+    }
+
+    function sendJsonChangePassword() {
+        var infoArray = getInfoChangePassword();
+        var xhrChangePassword = new XMLHttpRequest();
+        xhrChangePassword.open("POST", "/restful/timeTrack/changePassword", true);
+        xhrChangePassword.setRequestHeader("Content-Type", "application/json");
+        xhrChangePassword.send(JSON.stringify(infoArray));
+        return xhrChangePassword;
+    }
+
+    function changePasswordProcess() {
+        var xhrChangePassword = sendJsonChangePassword();
+        xhrChangePassword.onreadystatechange = function () {
+            if (xhrChangePassword.readyState === 4) {
+                if (xhrChangePassword.status === 200) {
+                    var responseParse = JSON.parse(xhrChangePassword.response);
+                    if (responseParse.errorCode === 0) {
+                        document.getElementById("nameInChangePasswordModal").innerHTML = "Sayın " + responseParse.userName;
+                        $("#changePasswordSuccess").modal();
+                    } else {
+                        alert(responseParse.errorMessage)
+                    }
+                }
+            }
+        }
+    }
+
+    function validateFormChangePassword() {
+        if (validNewPassword() && validNewPasswordConfirm()) {
+            changePasswordProcess();
+        } else {
+            alert("Lütfen doldurulması zorunlu olan alanları uygun biçimde doldurunuz.")
+        }
+    }
+
+    /* KULLANICI GİRİŞİ FONKSİYONLARI */
+
+
+    function getInfoLogin() {
+        var userName = document.getElementById("userNameLogin").value;
+        var password = document.getElementById("password").value;
+        return {"userName": userName, "password": password, "errorCode": 0, "errorMessage": ""};
+    }
+
+    function sendJsonLogin() {
+        var infoArray = getInfoLogin();
+        var xhrLogin = new XMLHttpRequest();
+        xhrLogin.open("POST", "/restful/timeTrack/login", true);
+        xhrLogin.setRequestHeader("Content-Type", "application/json");
+        xhrLogin.send(JSON.stringify(infoArray));
+        return xhrLogin;
+    }
+
+    function loginProcess() {
+        var xhrLogin = sendJsonLogin();
+        xhrLogin.onreadystatechange = function () {
+            if (xhrLogin.readyState === 4) {
+                if (xhrLogin.status === 200) {
+                    var responseParse = JSON.parse(xhrLogin.response);
+                    if (responseParse.errorCode === 0) {
+                        location.href = "userPage.html"
+                    } else {
+                        alert(responseParse.errorMessage)
+                    }
+                }
+            }
+        }
+    }
+
+
+    /* KULLANICI KAYDI FONKSİYONLARI */
+
+    function getInfoSignUp() {
+        var name = document.getElementById("name").value;
+        var userName = document.getElementById("userName").value;
+        var userPassword = document.getElementById("userPassword").value;
+        var phoneNumber = document.getElementById("phoneNumber").value;
+        var inputEmail = document.getElementById("inputEmail").value;
+        var companyName = document.getElementById("companyName").value;
+
+        return {
+            "name": name, "userName": userName, "password": userPassword,
+            "phoneNumber": phoneNumber, "inputEmail": inputEmail,
+            "companyName": companyName, "errorCode": 0, "errorMessage": ""
+
+        }
+    }
+
+    function sendJsonSignUp() {
+        var infoArray = getInfoSignUp();
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/restful/timeTrack/signUp", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(infoArray));
+        return xhr;
+    }
+
+    function processRequest() {
+        var xhr = sendJsonSignUp();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var responseParse = JSON.parse(xhr.response);
+                    if (responseParse.errorCode === 0) {
+                        document.getElementById("nameInModal").innerHTML = "Tebrikler " + responseParse.userName;
+                        $("#signUpSuccess").modal();
+                    } else {
+                        alert(responseParse.errorMessage)
+                    }
+                }
+            }
+        }
+    }
+
+    function validName() {
+        var name = document.getElementById("name").value;
+        var regex = /^[a-zA-ZğĞüÜşŞıİöÖÇç ]+$/;
+        return ((name.match(regex)) && (0 < name.length < 30));
+    }
+
+    function validUserName() {
+        var userName = document.getElementById("userName").value;
+        var regex = /^[a-zA-Z0-9ğĞüÜşŞıİöÖÇç ]+$/;
+        return ((userName.match(regex)) && (5 < userName.length < 30))
+    }
+
+    function validPhoneNumber() {
+        var phoneNumber = document.getElementById("phoneNumber").value;
+        var regex = /^[0-9 ]+$/;
+        return (phoneNumber.match(regex)) && (10 < phoneNumber.length < 20);
+    }
+
+    function validEmail() {
+        var eMail = document.getElementById("inputEmail").value;
+        var regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        return (eMail.match(regex)) && (eMail.length < 50);
+    }
+
+    function validPassword() {
+        var password = document.getElementById("userPassword").value;
+        var regex = /^[a-zA-Z0-9ğĞüÜşŞıİöÖÇç.,:;_]+$/;
+        return ((password.match(regex)) && (7 < password.length < 30))
+    }
+
+    function validCompanyName() {
+        var company = document.getElementById("companyName").value;
+        var regex = /^[a-zA-Z0-9ğĞüÜşŞıİöÖÇç ]+$/;
+        return ((company.match(regex)) && (0 < company.length < 30))
+    }
+
+    function validPasswordConfirm() {
+        var password = document.getElementById("userPassword").value;
+        var passwordConfirm = document.getElementById("userPasswordConfirm").value;
+        if (password === passwordConfirm) {
+            return true;
+        }
+    }
+
+    function checkboxConfirm() {
+        var checkValue = document.getElementById("checkboxSign");
+        if (checkValue.checked === true) {
+            return true;
+        }
+    }
+
+    function validateForm() {
+        if (validName() && validUserName() && validPhoneNumber() && validEmail()
+            && validPassword() && validCompanyName() && validPasswordConfirm() && checkboxConfirm()) {
+            processRequest();
+        } else {
+            alert("Lütfen doldurulması zorunlu olan alanları doldurunuz.")
+        }
+    }
+
+</script>
+</body>
+</html>

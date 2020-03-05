@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta content="application/json; charset=UTF-8" http-equiv="content-type">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <title>Takip Sistemi</title>
+    <style>
+        body {margin: 0; background-color: whitesmoke}
+        .top-buffer{
+            margin-top: 10%;
+            margin-left: 4%;
+        }
+        .all-screens{
+            height: 100%;
+            width: 72%;
+            border: inset;
+            float: left;
+            background-color: white;
+        }
+        .infoScreen{
+            border: inset;
+            width: 28%;
+            float: left;
+            height: 100%;
+            background-color: lightcyan;
+        }
+        .screenMapContainer{
+            width: 100%;
+
+        }
+        .navContainer{
+            height: 80px;
+            width: 100%;
+            background-color: azure;
+        }
+        .tabContainer{
+            border: powderblue;
+        }
+        #titleHome{
+            color: black;
+            font-size: x-large;
+        }
+        .mapAll{
+            margin: auto;
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+<!--NAVBAR YAPIMI-->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid navContainer">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#"><h4 id="titleHome">
+                <img src="https://pngimage.net/wp-content/uploads/2018/06/tt-logo-png-1.png"
+                     width="45" height="45" >
+                TimeTrack</h4>
+            </a>
+        </div></div>
+</nav>
+
+<div class="container screenMapContainer">
+<!--TABLARIN EKLENMESİ-->
+<div class="container tabContainer">
+    <ul class="nav nav-tabs nav-justified" role="tablist">
+        <li class="active"><a href="#">Masa Haritası</a></li>
+        <li><a data-toggle="modal" data-target="#addScreenModal">Masa Ekle</a></li>
+        <li><a href="#">Masa Sil</a></li>
+        <li><a href="#">Raporlama</a></li>
+    </ul>
+</div>
+
+<div class="container mapAll">
+<div class="container infoScreen">
+    <h3>Masa Num</h3>
+    <h5>Başlangıç Zamanı:</h5>
+    <h5>Geçen Zaman:</h5>
+    <h5>Bitiş Zamanı:</h5>
+    <h5>Tarife Tipi:</h5>
+</div>
+
+<!-- MASA HARİTASI EKRANI -->
+<div class="container all-screens" id="allScreens">
+</div>
+</div>
+
+</div>
+<!-- MASA EKLEME İÇİN AÇILAN MODAL YAPIMI -->
+<div class="modal fade" id="addScreenModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Yeni Masa Ekleme</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Kullanıcı Adı: <input type="text" id="userNameForAddScreen" placeholder="Kullanıcı Adı"/></h4>
+                <h4>Şifre: <input type="password" id="passwordForAddScreen" placeholder="Şifre"/></h4>
+            </div>
+            <div class="modal-body">
+                <h4>Masa Numarası: <input type="text" id="screenNumber" placeholder="Masa No"/></h4>
+                <h4>Saatlik Ücret: <input type="text" id="payAnHour" placeholder="Türk Lirası"/></h4>
+            </div>
+            <div class="modal-body">
+                <h4 id="errorMessage">Bilgileri doğru biçimde giriniz.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info btn-lg"
+                        onclick="processRequestForScreenInfo()">Ekle</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+    function validateScreenNumber() {
+        var screenNumber = document.getElementById("screenNumber").value;
+        var regex = /^[0-9]+$/;
+        return (screenNumber.match(regex)) && (0 < screenNumber.length < 20);
+    }
+    function validatePayAnHour() {
+        var payAnHour = document.getElementById("payAnHour").value;
+        var regex = /^[0-9]+$/;
+        return (payAnHour.match(regex)) && (0 < payAnHour.length < 20);
+    }
+    function getInfoForAddScreen(){
+        var userName=document.getElementById("userNameForAddScreen").value;
+        var password=document.getElementById("passwordForAddScreen").value;
+        var screenNumber=document.getElementById("screenNumber").value;
+        var payAnHour=document.getElementById("payAnHour").value;
+        return {
+            "userName": userName, "password": password, "screenNumber": screenNumber, "payAnHour": payAnHour,
+            "status": "Kapalı", "errorCode": 0, "errorMessage": ""
+        };
+    }
+    function sendJsonScreenInfo() {
+        var screenInfoArray=getInfoForAddScreen();
+        var xhrScreenInfo=new XMLHttpRequest();
+        xhrScreenInfo.open("POST","/restful/userPage/addNewScreen", true);
+        xhrScreenInfo.setRequestHeader("Content-Type", "application/json");
+        xhrScreenInfo.send(JSON.stringify(screenInfoArray));
+        return xhrScreenInfo;
+    }
+    function processRequestForScreenInfo() {
+        var xhrScreenInfo=sendJsonScreenInfo();
+        xhrScreenInfo.onreadystatechange=function () {
+            if (xhrScreenInfo.readyState===4){
+                if (xhrScreenInfo.status===200){
+                    var responseParse = JSON.parse(xhrScreenInfo.response);
+                    if (responseParse.errorCode === 0 && validatePayAnHour() && validateScreenNumber()) {
+                        addNewScreen();
+                        clearInputs();
+                    } else {
+                        document.getElementById("errorMessage").value=responseParse.errorMessage;
+                    }
+                }
+            }
+        }
+    }
+
+    function addNewScreen() {
+        var screenNumber=document.getElementById("screenNumber").value;
+        $("#allScreens").append(
+            '<div class="col-lg-2">'+
+            '<div class="row top-buffer">'+
+            '<button type="button" style="width: 100%; height: 100%;">' +
+            '<img src="close.png" style="width: 100%; height: 100%;"></button>'+
+            '<h4 style="margin-left: 15px"><b id="screen'+ screenNumber +'"></b></h4>'+
+            '</div>'+
+            '</div>'
+    );
+        document.getElementById("screen" + screenNumber).innerHTML="Masa "+screenNumber;
+    }
+    function clearInputs() {
+        document.getElementById("userNameForAddScreen").value="";
+        document.getElementById("passwordForAddScreen").value="";
+        document.getElementById("screenNumber").value="";
+        document.getElementById("payAnHour").value="";
+
+    }
+</script>
+
+</body>
+</html>
